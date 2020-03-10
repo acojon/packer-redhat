@@ -2,6 +2,27 @@
 
 When making changes to kickstart.cfb, make sure the line endings are set to lf.
 
+## Prerequisites
+
+A few things are not included in the repository.  This was primarily to save space.  The repository will need the following items added to it:
+
+* packer.exe
+* A redhat iso, the code is written to look for: rhel-8.0-x86_64-dvd.iso
+* share.yaml file
+
+### share.yaml
+
+When running Vagrant on HyperV, Vagrant will prompt at the command line for a username/password that can be used to setup smb shareJ(s).  These are used to synchronize the contents of a folder on the host, with a folder on the Vagrant box.  I created a share.yaml file and placed administrator credentials in the file.  The file is not committed to the repository, but you will need one of your own if you are going to use HyperV and do not want to be prompted for a username/password on every run.
+
+Here is what the file looks like:
+
+```yaml
+username: UsernameGoesHere
+password: PasswordForUserGoesHere
+```
+
+Save the file as share.yaml at the root of the repository, and you should be good to go :)
+
 ## How To
 
 There are three steps to this process:
