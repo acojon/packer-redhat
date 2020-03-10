@@ -1,0 +1,33 @@
+{
+    "builders": [
+        {
+          "type": "hyperv-iso",
+          "guest_additions_mode": "disable",
+          "iso_url": "{{ user `iso_url` }}",
+          "iso_checksum": "{{ user `iso_checksum` }}",
+          "iso_checksum_type": "md5",
+          "memory": "2048",
+          "disk_size": "21440",
+          "vm_name": "RHEL8Box",
+          "communicator": "ssh",
+          "ssh_username": "root",
+          "ssh_password": "vagrant",
+          "ssh_timeout": "20m",
+          "shutdown_command": "echo 'packer' | sudo -S -E shutdown -P now",
+          "shutdown_timeout": "15m",
+          "switch_name": "External Switch"
+        }
+      ],
+      "post-processors": [
+        {
+          "type": "vagrant",
+          "keep_input_artifact": true,
+          "output": "RHEL8-{{.Provider}}.box",
+          "vagrantfile_template": "vagrantfile-rhel8.template"
+        }
+      ],
+    "variables": {
+        "iso_checksum": "B931ED43AF3F6360300F9C948E5403B0",
+        "iso_url": "../iso/rhel-ks.iso"
+    }
+}

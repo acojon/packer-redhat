@@ -1,0 +1,42 @@
+{
+    "builders": [
+        {
+            "type": "hyperv-iso",
+            "cpus": "1",
+            "memory": "2048",
+            "headless": "{{ user `headless` }}",
+            "iso_url": "{{ user `iso_url` }}",
+            "iso_checksum": "{{ user `iso_checksum` }}",
+            "iso_checksum_type": "md5",
+            "switch_name": "Default Switch",
+            "communicator": "ssh",
+            "ssh_username": "vagrant",
+            "ssh_password": "vagrant",
+            "ssh_timeout": "20m",
+            "shutdown_command": "echo 'packer' | sudo -S -E shutdown -P now"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "inline": ["ls"]
+        },
+        {
+            "type": "shell",
+            "script": "scripts/cleanup.sh"
+        }
+    ],
+    "post-processors": [
+        {
+            "type": "vagrant",
+            "keep_input_artifact": true,
+            "output": "rhel8-{{.Provider}}.box",
+            "vagrantfile_template": "vagrantfile-RHEL.template"
+        }
+    ],
+    "variables": {
+        "guest_additions_mode": "attach",
+        "headless": "true",
+        "iso_url": "./rhel-ks.iso"
+    }
+}

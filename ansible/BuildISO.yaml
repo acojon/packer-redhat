@@ -1,0 +1,50 @@
+- hosts: 127.0.0.1
+  connection: local
+  become: yes
+  vars:
+    boot_menu_source: /vagrant/unattended/isolinux.cfg
+    iso_path: /root/rhel-8.0-x86_64-dvd.iso
+    kickstart_source: /vagrant/unattended/kickstart.cfg
+    make_iso_script_source: files/make_iso.sh
+    mount_point: /mnt/
+    source_folder: /root/rhel-install
+  handlers:
+    - name: mount fstab
+      command: /bin/mount -a
+  tasks:
+    - name: Mount the source iso
+      mount:
+        path: "{{mount_point}}"
+        src: "{{iso_path}}"
+        opts: loop
+        fstype: iso9660
+        state: present
+      notify:
+        - mount fstab
+
+    # If the ISO was mounted, we need to run the handler now instead of waiting
+    # for the end of the play.  This forces the mount to appear, which allows
+    # the copy files from ISO step to succeed :)
+    - name: flush handlers
+      meta: flush_handlers
+
+    - name: Copy the iso files to {{source_folder}}
+      synchronize:
+        src: "{{mount_point}}"
+        dest: "{{source_folder}}"
+
+    - name: Copy the kickstart file
+      copy:
+        src: "{{kickstart_source}}"
+        dest: "{{source_folder}}/ks.cfg"
+
+    - name: Copy the boot menu
+      copy:
+        src: "{{boot_menu_source}}"
+        dest: "{{source_folder}}/isolinux/isolinux.cfg"
+
+    - name: Copy the make_iso.sh script
+      copy:
+        src: "{{make_iso_script_source}}"
+        dest: "/root"
+        mode: "0700"

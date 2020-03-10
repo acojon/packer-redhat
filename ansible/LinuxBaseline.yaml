@@ -1,0 +1,54 @@
+- hosts: 127.0.0.1
+  connection: local
+  become: yes
+  vars:
+    packages:
+      # Install isoinfo and genisoimage
+      - genisoimage
+  tasks:
+    - name: Turn on dircolors
+      replace:
+        dest: /root/.bashrc
+        regexp: '^# eval "`dircolors`"$'
+        replace: 'eval "`dircolors`"'
+        # backup: yes
+
+    - name: Export LS_Options
+      replace:
+        dest: /root/.bashrc
+        regexp: '^# export LS_OPTIONS=''--color=auto''$'
+        replace: 'export LS_OPTIONS=''--color=auto'''
+        # backup: yes
+
+    - name: Alias ll to ls -la
+      replace:
+        dest: /root/.bashrc
+        regexp: '^# alias ll=''ls \$LS_OPTIONS -l''$'
+        replace: 'alias ll=''ls $LS_OPTIONS -la'''
+        # backup: yes
+
+    - name: Alias ll to ls -la
+      replace:
+        dest: /home/vagrant/.bashrc
+        regexp: '^#\s?alias ll=''ls -l''$'
+        replace: 'alias ll=''ls -la'''
+        # backup: yes
+
+    - name: apt-get dist-upgrade
+      apt:
+        upgrade: dist
+        update_cache: yes
+        dpkg_options: 'force-confold,force-confdef'
+
+    - name: apt-get autoremove
+      apt:
+        autoremove: yes
+
+    - name: install modules via apt
+      apt:
+        name: "{{ packages }}"
+        state: present
+
+    - name: Set the timezone to Denver
+      timezone:
+        name: America/Denver

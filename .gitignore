@@ -1,0 +1,13 @@
+
+output-hyperv-iso/*
+*.iso
+packer.exe
+packer_cache/*
+RHEL_HyperV/*
+.vagrant/*
+VagrantBox/packer.exe
+VagrantBox/packer_cache/*
+VagrantBox/output-hyperv-iso/*
+*.box
+share.yaml
+*.filepart
