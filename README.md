@@ -1,10 +1,10 @@
 # Packer-Redhat
 
-When making changes to kickstart.cfb, make sure the line endings are set to lf.
+I use the code in this repository to create a build server, and to automate the creation of a Red Hat Enterprise Linux 8 server iso with a custom kickstart file.  The kickstart file is configured to build a RHEL8 .iso that I then use to build a vagrant RHEL8 box.
 
 ## Prerequisites
 
-A few things are not included in the repository.  This was primarily to save space.  The repository will need the following items added to it:
+The repository will need the following items added to it:
 
 * packer.exe
 * A redhat iso, the code is written to look for: rhel-8.0-x86_64-dvd.iso
@@ -69,9 +69,11 @@ This script will:
 
 ## When Changing The kickstart iso
 
+Very important: When making changes to kickstart.cfb, make sure the line endings are set to lf.
+
 When regenerating the kickstart iso, be sure to delete the contents of the packer_cache.
 
-run the playbook
+To build a new .iso using the updated kickstart file, log onto the build server as vagrant, and run the following commands:
 
 ```ssh
 cd ansible
