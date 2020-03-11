@@ -12,7 +12,7 @@ A few things are not included in the repository.  This was primarily to save spa
 
 ### share.yaml
 
-When running Vagrant on HyperV, Vagrant will prompt at the command line for a username/password that can be used to setup smb shareJ(s).  These are used to synchronize the contents of a folder on the host, with a folder on the Vagrant box.  I created a share.yaml file and placed administrator credentials in the file.  The file is not committed to the repository, but you will need one of your own if you are going to use HyperV and do not want to be prompted for a username/password on every run.
+When running Vagrant on HyperV, Vagrant will prompt at the command line for a username/password that can be used to setup smb share(s).  These are used to synchronize the contents of a folder on the host, with a folder on the Vagrant box.  I created a share.yaml file and placed administrator credentials in the file.  The file is not committed to the repository, but you will need one of your own if you are going to use HyperV and do not want to be prompted for a username/password on every run.
 
 Here is what the file looks like:
 
