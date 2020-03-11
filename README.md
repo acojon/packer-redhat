@@ -69,7 +69,7 @@ This script will:
 
 ## When Changing The kickstart iso
 
-Very important: When making changes to kickstart.cfb, make sure the line endings are set to lf.
+Very important: When making changes to kickstart.cfg, make sure the line endings are set to lf.
 
 When regenerating the kickstart iso, be sure to delete the contents of the packer_cache.
 
