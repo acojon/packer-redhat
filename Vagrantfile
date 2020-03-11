@@ -20,7 +20,6 @@ Vagrant.configure("2") do |config|
       hv.memory = "4098"
       hv.maxmemory = "4098"
       hv.cpus = "4"
-      hv.enable_virtualization_extensions = true
       hv.linked_clone = true
 
       hv.vm_integration_services = {
